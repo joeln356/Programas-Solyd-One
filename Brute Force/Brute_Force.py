@@ -1,8 +1,10 @@
+# instale estas dependências, dev. Joel, ksks.
+
 import aiohttp
 import asyncio
+import colorama
 
 from functools import lru_cache
-
 
 URL = "http://shop.bancocn.com"
 
@@ -18,14 +20,19 @@ async def get_response(session, word):
     final_url = f"{URL}/{word}"
 
     try:
-        async with session.get(final_url, timeout=120) as response:
-            print(f"{final_url} -> {response.status}")
+        async with session.get(final_url) as response:
+            print(
+                (colorama.Fore.RED if response.status > 400 else colorama.Fore.GREEN)
+                + f"{final_url} -> {response.status}"
+            )
+            
     except Exception as error:
         print(f"URL: {final_url} -> error: {type(error).__name__}")
 
 
 async def main():
-    async with aiohttp.ClientSession() as session:
+    # timeout absurdo de 1h, só para n bugar, ksks
+    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=60 * 60)) as session:
         tasks = [get_response(session, word) for word in get_wordlist()]
         await asyncio.gather(*tasks)
 
