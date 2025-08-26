@@ -18,10 +18,10 @@ async def get_response(session, word):
     final_url = f"{URL}/{word}"
 
     try:
-        async with session.get(final_ur, timeout=10) as response:
+        async with session.get(final_url) as response:
             print(f"{final_url} -> {response.status}")
     except Exception as error:
-        print(f"Error: {error}")
+        print(f"URL: {final_url} -> error: {type(error)}")
 
 
 async def main():
