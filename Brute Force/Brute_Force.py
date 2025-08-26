@@ -1,4 +1,4 @@
-# instale estas dependências, dev. Joel, ksks.
+#Directory Brute Force
 
 import aiohttp
 import asyncio
