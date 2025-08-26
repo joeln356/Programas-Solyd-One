@@ -1,3 +1,4 @@
+#The program must be run through the terminal
 import socket
 import sys
 
