@@ -38,5 +38,3 @@ async def main():
 
 
 asyncio.run(main())
-
-# By Ângelote. :|.
