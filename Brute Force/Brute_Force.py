@@ -1,21 +1,35 @@
-import requests
-from concurrent.futures import ThreadPoolExecutor
+import aiohttp
+import asyncio
 
-url = "http://shop.bancocn.com"
+from functools import lru_cache
 
-with open("wordlist.txt", 'r') as f:
-    wordlist = f.readlines()
 
-def testar(palavra):
-    palavra = palavra.strip()  # remove \n
-    url_final = f"{url}/{palavra}"
+URL = "http://shop.bancocn.com"
+
+
+@lru_cache 
+def get_wordlist(): # leva 0,02 em média
+    with open("wordlist.txt", 'r') as f:
+        wordlist = [line.strip() for line in f.readlines()]
+    return wordlist
+
+
+async def get_response(session, word):
+    final_url = f"{URL}/{word}"
+
     try:
-        r = requests.get(url_final)
-        if r.status_code == 200:
-            print(f"{url_final} -> {r.status_code}")
-    except requests.exceptions.RequestException:
-        pass
+        async with session.get(final_ur, timeout=10) as response:
+            print(f"{final_url} -> {response.status}")
+    except Exception as error:
+        print(f"Error: {error}")
 
-# aqui passamos a lista wordlist (não url_final sozinho)
-with ThreadPoolExecutor(max_workers=25) as executor:
-    executor.map(testar, wordlist)
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        tasks = [get_response(session, word) for word in get_wordlist()]
+        await asyncio.gather(*tasks)
+
+
+asyncio.run(main())
+
+# By Ângelote. :|.
