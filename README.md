@@ -1,16 +1,24 @@
-# Título Centralizado
-<p align="center">Um pouco de texto explicativo com estilo simples.</p>
+# Hi there
+
+![Badge build] ![Badge license] ![Badge language]
+
+## Sobre (Overview)
+Um parágrafo curto que explica o propósito e impacto do projeto.
+
+## Sumário (Table of Contents)
+- [Funcionalidades](#funcionalidades)
+- [Capturas de Tela](#capturas-de-tela)
+- [Instalação](#instalação)
+- [Uso](#uso)
+- [Contribução](#contribuição)
+- [Licença](#licença)
 
 ## Funcionalidades
-- **Negrito**, *itálico*, ~~tachado~~
-- Tabelas, gifs, badges, emojis, links
-- Tarefas: 
-  - [x] Concluído 
-  - [ ] Pendente
+- Breve lista do que o projeto faz ou habilidades que você tem (no caso de perfil)
 
-## Tabela de exemplo
+## Capturas de Tela / GIF
+![screenshot ou GIF explicando o projeto]
 
-| Recurso      | Descrição                    |
-|--------------|------------------------------|
-| Imagem/GIF   | `![Alt](link)`               |
-| Badge        | `![badge](https://img.shields.io/...)` |
+## Instalação
+```bash
+# instruções para quem vai testar ou rodar
