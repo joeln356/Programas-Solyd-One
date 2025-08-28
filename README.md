@@ -1,1 +1,1 @@
-# Repositório de Aprendizado Pentest – Solyd Course Projects
+# Pentest Course Projects
