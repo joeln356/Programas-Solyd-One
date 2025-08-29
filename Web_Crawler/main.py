@@ -1,37 +1,57 @@
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
+import time
 
-founded_links = []
-visited = set()
+target = ['http://tpaonline.ao/']  
+visited = set()                   
+founded = set()
 
-target = "http://advanced.bancocn.com"
-
-def parsing(link):
-    if link in visited:
-        return
-    visited.add(link)
-
+def found_links(url):
     try:
-        response = requests.get(link)
-        soup = BeautifulSoup(response.text, 'html.parser')
+        print(f"Visitando: {url}")
+        response = requests.get(url, timeout=10, headers={'User-Agent': 'Mozilla/5.0'})
+        response.raise_for_status()
 
+
+        # Avoid processing non-HTML responses
+
+        if 'text/html' not in response.headers.get('Content-Type', ''):
+            return
+            
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
         for tag in soup.find_all('a'):
             href = tag.get('href')
             if href:
-                full_link = urljoin(link, href)
-
-                if "advanced.bancocn.com" in full_link:
-                    founded_links.append(full_link)
+                
+                if href.startswith(('http://', 'https://')):  
+                    full_url = href
+                else:
+                    full_url = urljoin(url, href)
+                
+                # Limpa a URL
+                full_url = full_url.split('#')[0]
+                
+                founded.add(full_url)
+                
+                if (full_url not in visited and 
+                    full_url not in target and 
+                    full_url.startswith(('http://', 'https://'))):
+                    target.append(full_url)
+        
+        time.sleep(0.1)
+                    
     except Exception as e:
-        print(f'Error accesing {link}: {e}')
+        print(f"Erro em {url}: {e}")
 
-parsing(target)
+max_links = 1000
+while target and len(visited) < max_links:
+    link = target.pop(0)
+    if link not in visited:
+        found_links(link)
+        visited.add(link)
 
-for link in founded_links:
-        parsing(link)
-
-print('=======Founded links=======')
-for l in visited:
-     print(l)
-
+print(f"\n{len(founded)} links encontrados:")
+for link in sorted(founded):
+    print(link)
