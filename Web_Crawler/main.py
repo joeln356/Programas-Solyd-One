@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 import time
 
-target = ['http://tpaonline.ao/']  
+target = ['http://44.222.68.207/']  
 visited = set()                   
 founded = set()
 
